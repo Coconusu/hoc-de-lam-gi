@@ -436,18 +436,14 @@ Hãy trả lời theo cấu trúc HTML sau (chỉ trả về HTML, không có ma
 Hãy thực tế, cụ thể với thị trường Việt Nam. Không nói chung chung.`;
 
     try {
-      const response = await fetch("https://api.anthropic.com/v1/messages", {
+       const response = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          model: "claude-sonnet-4-20250514",
-          max_tokens: 1000,
-          messages: [{ role: "user", content: prompt }]
-        })
+        body: JSON.stringify({ prompt })
       });
 
       const data = await response.json();
-      const html = data.content?.[0]?.text || "<p>Không có kết quả. Vui lòng thử lại.</p>";
+      const html = data.text || "<p>Không có kết quả. Vui lòng thử lại.</p>";
 
       resultLabel.textContent = query.toUpperCase();
       resultContent.innerHTML = html;
